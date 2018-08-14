@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://github.com/peterbecker/autocode/entities" targetNamespace="http://github.com/peterbecker/autocode/entities">
+    <xs:element name="entities">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="entity" type="entityType" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="package" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="entityType">
+        <xs:sequence>
+            <xs:element name="property" type="propertyType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="name" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="propertyType">
+        <xs:attribute name="name" use="required"/>
+        <xs:attribute name="type" use="required"/>
+    </xs:complexType>
+</xs:schema>
