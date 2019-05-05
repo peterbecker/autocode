@@ -82,7 +82,7 @@ public class AutoCodePlugin extends AbstractMojo {
     }
 
     private Map<EntityTemplate, Template> setUpEntityTemplates(List<AutoCodePak> paks) throws MojoExecutionException {
-        Configuration fmConfig = new Configuration();
+        Configuration fmConfig = new Configuration(Configuration.VERSION_2_3_28);
         fmConfig.setClassForTemplateLoading(AutoCodePlugin.class, "/autocode/templates");
 
         Map<EntityTemplate, Template> result = new HashMap<>();
@@ -116,7 +116,7 @@ public class AutoCodePlugin extends AbstractMojo {
     }
 
     private Map<GlobalTemplate, Template> setUpGlobalTemplates(List<AutoCodePak> paks) throws MojoExecutionException {
-        Configuration fmConfig = new Configuration();
+        Configuration fmConfig = new Configuration(Configuration.VERSION_2_3_28);
         fmConfig.setClassForTemplateLoading(AutoCodePlugin.class, "/autocode/templates");
 
         Map<GlobalTemplate, Template> result = new HashMap<>();

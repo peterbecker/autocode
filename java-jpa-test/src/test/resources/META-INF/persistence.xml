@@ -5,7 +5,6 @@
 
     <persistence-unit name="test">
         <description>Test Unit for in-memory HSQLDB</description>
-        <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <class>com.github.peterbecker.autocode.Person</class>
         <class>com.github.peterbecker.autocode.Role</class>
         <properties>
