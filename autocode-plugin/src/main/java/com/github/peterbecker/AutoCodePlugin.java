@@ -9,6 +9,9 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 import javax.xml.bind.JAXBContext;
@@ -19,23 +22,18 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.*;
 
-/**
- * @goal generate
- */
+@Mojo(
+        name = "generate",
+        defaultPhase = LifecyclePhase.GENERATE_SOURCES
+)
 public class AutoCodePlugin extends AbstractMojo {
-
-    /**
-     * The Maven project representing the whole build.
-     *
-     * @parameter expression="${project}"
-     */
+    @Parameter(property = "project")
     private MavenProject project;
 
     /**
      * File containing the entity definition.
-     *
-     * @parameter expression="${project.basedir}/src/main/autocode/entities.xml"
      */
+    @Parameter(defaultValue = "${project.basedir}/src/main/autocode/entities.xml")
     private File entitiesFile;
 
     public void execute() throws MojoExecutionException {
