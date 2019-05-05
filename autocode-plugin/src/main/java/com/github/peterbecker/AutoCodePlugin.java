@@ -3,7 +3,9 @@ package com.github.peterbecker;
 import com.github.peterbecker.autocode.entities.Entities;
 import com.github.peterbecker.autocode.entities.EntityType;
 import com.github.peterbecker.pak.AutoCodePak;
+import com.github.peterbecker.pak.templates.AutoCodeTemplate;
 import com.github.peterbecker.pak.templates.EntityTemplate;
+import com.github.peterbecker.pak.templates.GlobalTemplate;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -39,9 +41,10 @@ public class AutoCodePlugin extends AbstractMojo {
     public void execute() throws MojoExecutionException {
         validateParametersAndInitialize();
         List<AutoCodePak> paks = loadPaks();
-        Map<EntityTemplate, Template> templates = setUpTemplates(paks);
         Entities entities = readEntities();
-        createSourceFiles(entities, templates);
+
+        createGlobalSourceFiles(entities, setUpGlobalTemplates(paks));
+        createEntitySourceFiles(entities, setUpEntityTemplates(paks));
     }
 
     private List<AutoCodePak> loadPaks() throws MojoExecutionException {
@@ -78,7 +81,7 @@ public class AutoCodePlugin extends AbstractMojo {
         return entities;
     }
 
-    private Map<EntityTemplate, Template> setUpTemplates(List<AutoCodePak> paks) throws MojoExecutionException {
+    private Map<EntityTemplate, Template> setUpEntityTemplates(List<AutoCodePak> paks) throws MojoExecutionException {
         Configuration fmConfig = new Configuration();
         fmConfig.setClassForTemplateLoading(AutoCodePlugin.class, "/autocode/templates");
 
@@ -95,7 +98,7 @@ public class AutoCodePlugin extends AbstractMojo {
         return result;
     }
 
-    private void createSourceFiles(Entities entities, Map<EntityTemplate, Template> templates) throws MojoExecutionException {
+    private void createEntitySourceFiles(Entities entities, Map<EntityTemplate, Template> templates) throws MojoExecutionException {
         String packageName = entities.getPackage().replace(".", "/");
         getLog().debug("Package is " + packageName);
         Map<String, Object> data = new HashMap<>();
@@ -107,15 +110,56 @@ public class AutoCodePlugin extends AbstractMojo {
                 getLog().debug("Processing entity " + entity.getName());
                 data.put("entity", entity);
                 String fileName = definition.getOutputFileNameGenerator().apply(entity);
-                getLog().debug("Output file is " + fileName);
-                try (Writer out = definition.getOutputTarget().getWriter(packageName, fileName)) {
-                    template.process(data, out);
-                } catch (TemplateException e) {
-                    throw new MojoExecutionException("Can not process template", e);
-                } catch (IOException e) {
-                    throw new MojoExecutionException("Can not generate code", e);
+                renderTemplate(packageName, data, template, definition, fileName);
+            }
+        }
+    }
+
+    private Map<GlobalTemplate, Template> setUpGlobalTemplates(List<AutoCodePak> paks) throws MojoExecutionException {
+        Configuration fmConfig = new Configuration();
+        fmConfig.setClassForTemplateLoading(AutoCodePlugin.class, "/autocode/templates");
+
+        Map<GlobalTemplate, Template> result = new HashMap<>();
+        try {
+            for (AutoCodePak pak : paks) {
+                for (GlobalTemplate def : pak.getGlobalTemplates()) {
+                    result.put(def, fmConfig.getTemplate(def.getTemplateFileName()));
                 }
             }
+        } catch (IOException e) {
+            throw new MojoExecutionException("Cannot read template", e);
+        }
+        return result;
+    }
+
+    private void createGlobalSourceFiles(Entities entities, Map<GlobalTemplate, Template> templates) throws MojoExecutionException {
+        String packageName = entities.getPackage().replace(".", "/");
+        getLog().debug("Package is " + packageName);
+        Map<String, Object> data = new HashMap<>();
+        data.put("package", entities.getPackage());
+        data.put("entities", entities.getEntity());
+        for (GlobalTemplate definition : templates.keySet()) {
+            getLog().debug("Processing definition for template " + definition.getTemplateFileName());
+            Template template = templates.get(definition);
+            String fileName = definition.getOutputFileName();
+            renderTemplate(packageName, data, template, definition, fileName);
+        }
+    }
+
+    private void renderTemplate(
+            String packageName,
+            Map<String, Object> data,
+            Template template,
+            AutoCodeTemplate definition,
+            String fileName
+    ) throws MojoExecutionException {
+        getLog().debug("Output file is " + fileName);
+        try (Writer out = definition.getOutputTarget().getWriter(packageName, fileName)) {
+            template.process(data, out);
+        } catch (TemplateException e) {
+            throw new MojoExecutionException("Can not process template", e);
+        } catch (IOException e) {
+            throw new MojoExecutionException("Can not generate code", e);
         }
     }
 }
