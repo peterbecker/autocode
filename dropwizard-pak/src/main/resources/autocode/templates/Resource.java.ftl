@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.Optional;
 
-@Path("/${entity.name}")
+@Path("/${entity.name?lower_case}")
 @Produces(MediaType.APPLICATION_JSON)
 public class ${entity.name}Resource {
     private final ${entity.name}Dao dao;

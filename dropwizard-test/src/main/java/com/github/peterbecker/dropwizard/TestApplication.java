@@ -10,6 +10,6 @@ public class TestApplication extends AutocodeApplication<TestConfiguration> {
 
     @Override
     public void customize(TestConfiguration testConfiguration, Environment environment) {
-        // nothing yet
+        environment.jersey().register(new HelloWorldResource(testConfiguration.getMessage()));
     }
 }

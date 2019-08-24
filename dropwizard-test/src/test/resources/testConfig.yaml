@@ -1,1 +1,3 @@
 persistenceUnitName: test
+
+message: Hello World!

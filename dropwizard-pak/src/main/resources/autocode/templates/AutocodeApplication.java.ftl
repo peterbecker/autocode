@@ -1,4 +1,4 @@
-<#--noinspection HtmlUnknownTag-->
+<#--noinspection HtmlUnknownTag,HtmlMissingClosingTag-->
 package ${package};
 
 import io.dropwizard.Application;
@@ -21,6 +21,7 @@ public abstract class AutocodeApplication<C extends AutocodeConfiguration> exten
 <#list entities as entity>
         environment.jersey().register(new ${entity.name}Resource(new ${entity.name}Dao(em)));
 </#list>
+        customize(c, environment);
     }
 
     protected void customize(C c, Environment environment) throws Exception {
