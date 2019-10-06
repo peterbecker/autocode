@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ac:entities xmlns:ac="http://github.com/peterbecker/autocode/entities" package="com.github.peterbecker.autocode">
+<entities package="com.github.peterbecker.autocode">
     <entity name="Person">
         <property name="name" type="String"/>
         <property name="birthDate" type="java.util.Date"/>
@@ -8,4 +8,4 @@
         <property name="name" type="String"/>
         <property name="description" type="String"/>
     </entity>
-</ac:entities>
+</entities>
