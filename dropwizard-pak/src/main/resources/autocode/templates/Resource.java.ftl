@@ -13,9 +13,9 @@ import java.util.Optional;
 @Path("/${entity.name?lower_case}")
 @Produces(MediaType.APPLICATION_JSON)
 public class ${entity.name}Resource {
-    private final ${entity.name}Dao dao;
+    private final ${entity.name}AppDao dao;
 
-    public ${entity.name}Resource(${entity.name}Dao dao) {
+    public ${entity.name}Resource(${entity.name}AppDao dao) {
         this.dao = dao;
     }
 

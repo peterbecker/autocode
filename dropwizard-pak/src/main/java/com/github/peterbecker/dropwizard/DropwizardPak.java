@@ -29,8 +29,9 @@ public class DropwizardPak implements AutoCodePak {
 
     @Override
     public List<EntityTemplate> getEntityTemplates() {
-        return Collections.singletonList(
-                new EntityTemplate("Resource.java.ftl", javaSources, e -> e.getName() + "Resource.java")
+        return Arrays.asList(
+                new EntityTemplate("Resource.java.ftl", javaSources, e -> e.getName() + "Resource.java"),
+                new EntityTemplate("AppDao.java.ftl", javaSources, e -> e.getName() + "AppDao.java")
         );
     }
 }

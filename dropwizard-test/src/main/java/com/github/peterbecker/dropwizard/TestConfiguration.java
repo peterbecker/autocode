@@ -1,10 +1,12 @@
 package com.github.peterbecker.dropwizard;
 
-import lombok.Getter;
-import lombok.Setter;
+import org.hibernate.validator.constraints.NotEmpty;
 
-@Getter
-@Setter
 public class TestConfiguration extends AutocodeConfiguration {
+    @NotEmpty
     private String message;
+
+    public String getMessage() {
+        return message;
+    }
 }

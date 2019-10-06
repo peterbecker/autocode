@@ -1,3 +1,7 @@
-persistenceUnitName: test
+database:
+    driverClass: org.hsqldb.jdbc.JDBCDriver
+    url: "jdbc:hsqldb:mem:testdb"
+    user: "sa"
+    password: ""
 
 message: Hello World!

@@ -2,19 +2,22 @@ package com.github.peterbecker.dropwizard;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
-import org.hibernate.validator.constraints.NotEmpty;
+import io.dropwizard.db.DataSourceFactory;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+@Setter
+@Getter
 public class AutocodeConfiguration extends Configuration {
-    @NotEmpty
-    private String persistenceUnitName;
+    @Valid
+    @NotNull
+    protected DataSourceFactory database = new DataSourceFactory();
 
-    @JsonProperty
-    public String getPersistenceUnitName() {
-        return persistenceUnitName;
-    }
-
-    @JsonProperty
-    public void setPersistenceUnitName(String persistenceUnitName) {
-        this.persistenceUnitName = persistenceUnitName;
+    @JsonProperty("database")
+    public DataSourceFactory getDataSourceFactory() {
+        return database;
     }
 }

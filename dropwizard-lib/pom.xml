@@ -23,6 +23,11 @@
             <version>${dropwizard.version}</version>
         </dependency>
         <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-hibernate</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.peterbecker</groupId>
             <artifactId>java-jpa-lib</artifactId>
             <version>1.0-SNAPSHOT</version>

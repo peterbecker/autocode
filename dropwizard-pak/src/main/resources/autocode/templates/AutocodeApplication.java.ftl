@@ -1,30 +1,36 @@
-<#--noinspection HtmlUnknownTag,HtmlMissingClosingTag-->
+<#--noinspection WrongPackageStatement,WeakerAccess-->
 package ${package};
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 
+import com.github.peterbecker.dropwizard.AutocodeApplicationBase;
 import com.github.peterbecker.dropwizard.AutocodeConfiguration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public abstract class AutocodeApplication<C extends AutocodeConfiguration> extends Application<C> {
-    /**
-     * Configures the application with all resources, add customization into @linkplain{#customize(C, Environment)}
-     */
+import com.google.common.collect.ImmutableList;
+
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+
+public abstract class AutocodeApplication<C extends AutocodeConfiguration> extends AutocodeApplicationBase<C> {
     @Override
-    public final void run(C c, Environment environment) throws Exception {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory(c.getPersistenceUnitName());
-        EntityManager em = factory.createEntityManager();
-<#list entities as entity>
-        environment.jersey().register(new ${entity.name}Resource(new ${entity.name}Dao(em)));
-</#list>
-        customize(c, environment);
+    public ImmutableList<Class<?>> getEntities() {
+        ImmutableList.Builder<Class<?>> builder = ImmutableList.builder();
+    <#list entities as entity>
+        builder.add(${entity.name}.class);
+    </#list>
+        return builder.build();
     }
 
-    protected void customize(C c, Environment environment) throws Exception {
-        // can be used to further customize startup
+    @SuppressWarnings("RedundantThrows")
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void run(C c, Environment environment) throws Exception {
+<#list entities as entity>
+        environment.jersey().register(new ${entity.name}Resource(new ${entity.name}AppDao(hibernate.getSessionFactory())));
+</#list>
     }
 }
