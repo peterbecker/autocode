@@ -12,6 +12,14 @@
 
     <artifactId>java-jpa-test</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.peterbecker</groupId>
+            <artifactId>java-jpa-lib</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -36,12 +44,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.github.peterbecker</groupId>
-            <artifactId>java-jpa-lib</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 </project>
