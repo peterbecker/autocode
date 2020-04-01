@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<entities package="com.github.peterbecker.autocode">
+<entities package="com.github.peterbecker.autocode" xmlns="http://github.com/peterbecker/autocode/entities">
     <entity name="Person">
         <property name="name" type="String"/>
         <property name="birthDate" type="java.util.Date"/>
