@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns="http://github.com/peterbecker/autocode/entities" targetNamespace="http://github.com/peterbecker/autocode/entities">
+           xmlns="http://github.com/peterbecker/autocode/entities"
+           targetNamespace="http://github.com/peterbecker/autocode/entities"
+           attributeFormDefault="unqualified"
+           elementFormDefault="unqualified"
+>
     <xs:element name="entities">
         <xs:complexType>
             <xs:sequence>
