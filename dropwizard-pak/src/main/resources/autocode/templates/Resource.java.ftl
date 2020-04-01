@@ -1,12 +1,14 @@
 package ${package};
 
 import com.codahale.metrics.annotation.Timed;
+import io.dropwizard.hibernate.UnitOfWork;
+import io.dropwizard.jersey.params.LongParam;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.Optional;
 
@@ -19,9 +21,31 @@ public class ${entity.name}Resource {
         this.dao = dao;
     }
 
-    @GET
+    @POST
     @Timed
-    public ${entity.name} get() {
-        return null;
+    @UnitOfWork
+    public Response create(${entity.name} entity) throws URISyntaxException  {
+        long id = dao.save(entity);
+        return Response.created(new URI("/${entity.name}/" + id)).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    @Timed
+    @UnitOfWork
+    public ${entity.name} get(@PathParam("id") LongParam id) {
+        return dao.findById(id.get());
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Timed
+    @UnitOfWork
+    public Response update(@PathParam("id") LongParam id, ${entity.name} entity) {
+        if(entity.getId() != id.get()) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        dao.save(entity);
+        return Response.ok().build();
     }
 }
