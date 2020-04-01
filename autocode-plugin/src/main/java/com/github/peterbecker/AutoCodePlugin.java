@@ -15,10 +15,15 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.xml.sax.SAXException;
 
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
@@ -74,8 +79,15 @@ public class AutoCodePlugin extends AbstractMojo {
         try {
             JAXBContext context = JAXBContext.newInstance(Entities.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = schemaFactory.newSchema(
+                    new StreamSource(
+                            AutoCodePlugin.class.getResourceAsStream("/entities.xsd")
+                    )
+            );
+            unmarshaller.setSchema(schema);
             entities = (Entities) unmarshaller.unmarshal(entitiesFile);
-        } catch (JAXBException e) {
+        } catch (JAXBException | SAXException e) {
             throw new MojoExecutionException("Failed to parse " + entitiesFile.getAbsolutePath(), e);
         }
         return entities;
