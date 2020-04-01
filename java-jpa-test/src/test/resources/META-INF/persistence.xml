@@ -4,11 +4,11 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
 
     <persistence-unit name="test">
-        <description>Test Unit for in-memory HSQLDB</description>
+        <description>Test Unit for in-memory H2</description>
         <class>com.github.peterbecker.autocode.Person</class>
         <class>com.github.peterbecker.autocode.Role</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:testdb"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:testdb"/>
             <property name="javax.persistence.jdbc.user" value="sa"/>
             <property name="javax.persistence.jdbc.password" value=""/>
         </properties>

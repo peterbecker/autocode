@@ -13,18 +13,18 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class PersonCrudTests extends TestBase {
     @Test
     public void crudCycle() {
-        TestClient client = createClient();
+        var client = createClient();
 
-        String name = "John Doe";
-        LocalDate birthday = LocalDate.of(1999, 11, 11);
+        var name = "John Doe";
+        var birthday = LocalDate.of(1999, 11, 11);
 
-        long id = client.addPerson(name, birthday);
-        Person person = client.getPerson(id);
+        var id = client.addPerson(name, birthday);
+        var person = client.getPerson(id);
         assertThat(person.getName()).isEqualTo(name);
         assertThat(person.getBirthDate()).isEqualTo(birthday);
 
-        String newName = "Jane Doe";
-        LocalDate newBirthday = LocalDate.of(1997,10,10);
+        var newName = "Jane Doe";
+        var newBirthday = LocalDate.of(1997,10,10);
         client.updatePerson(id, newName, newBirthday);
         person = client.getPerson(id);
         assertThat(person.getName()).isEqualTo(newName);
