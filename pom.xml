@@ -151,8 +151,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <!-- versions 2.20 and higher cause test failure, needs investigation before upgrade -->
-                    <version>2.19.1</version>
+                    <version>2.22.2</version>
                 </plugin>
             </plugins>
         </pluginManagement>

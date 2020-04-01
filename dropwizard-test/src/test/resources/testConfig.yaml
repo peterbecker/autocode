@@ -1,7 +1,10 @@
 database:
-    driverClass: org.hsqldb.jdbc.JDBCDriver
-    url: "jdbc:hsqldb:mem:testdb"
+    driverClass: org.h2.Driver
+    url: "jdbc:h2:mem:testdb"
     user: "sa"
     password: ""
+    logValidationErrors: true
+    properties:
+        hibernate.dialect: org.hibernate.dialect.H2Dialect
 
 message: Hello World!

@@ -1,15 +1,8 @@
 package com.github.peterbecker.dropwizard;
 
 import com.github.peterbecker.autocode.Person;
-import io.dropwizard.client.JerseyClientBuilder;
-import io.dropwizard.testing.ResourceHelpers;
-import io.dropwizard.testing.junit.DropwizardAppRule;
-import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.core.Response;
 
 import java.time.LocalDate;
 
@@ -23,19 +16,19 @@ public class PersonCrudTests extends TestBase {
         TestClient client = createClient();
 
         String name = "John Doe";
-        LocalDate bDay = LocalDate.of(1999, 11, 11);
+        LocalDate birthday = LocalDate.of(1999, 11, 11);
 
-        long id = client.addPerson(name, bDay);
+        long id = client.addPerson(name, birthday);
         Person person = client.getPerson(id);
         assertThat(person.getName()).isEqualTo(name);
-        assertThat(person.getBirthDate()).isEqualTo(bDay);
+        assertThat(person.getBirthDate()).isEqualTo(birthday);
 
         String newName = "Jane Doe";
-        LocalDate newBday = LocalDate.of(1997,10,10);
-        client.updatePerson(id, newName, newBday);
+        LocalDate newBirthday = LocalDate.of(1997,10,10);
+        client.updatePerson(id, newName, newBirthday);
         person = client.getPerson(id);
-        assertThat(person.getName()).isEqualTo(name);
-        assertThat(person.getBirthDate()).isEqualTo(bDay);
+        assertThat(person.getName()).isEqualTo(newName);
+        assertThat(person.getBirthDate()).isEqualTo(newBirthday);
 
         client.deletePerson(id);
         assertThatThrownBy(() -> client.getPerson(id));
