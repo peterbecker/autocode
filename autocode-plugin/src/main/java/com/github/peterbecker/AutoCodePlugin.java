@@ -75,7 +75,6 @@ public class AutoCodePlugin extends AbstractMojo {
     }
 
     private Entities readEntities() throws MojoExecutionException {
-        Entities entities;
         try {
             JAXBContext context = JAXBContext.newInstance(Entities.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
@@ -86,11 +85,10 @@ public class AutoCodePlugin extends AbstractMojo {
                     )
             );
             unmarshaller.setSchema(schema);
-            entities = (Entities) unmarshaller.unmarshal(entitiesFile);
+            return (Entities) unmarshaller.unmarshal(entitiesFile);
         } catch (JAXBException | SAXException e) {
             throw new MojoExecutionException("Failed to parse " + entitiesFile.getAbsolutePath(), e);
         }
-        return entities;
     }
 
     private Map<EntityTemplate, Template> setUpEntityTemplates(List<AutoCodePak> paks) throws MojoExecutionException {

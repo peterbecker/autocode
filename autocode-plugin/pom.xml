@@ -65,6 +65,14 @@
                     <sources>
                         <source>src/main/resources/entities.xsd</source>
                     </sources>
+                    <!--
+                    Below is a workaround for an issue where the plugin would ignore the namespace provided
+                    in the package-info.java file, expecting the root element to be without namespace.
+                    This would happen in some build environments, but not others (e.g. failed with
+                    OpenJDK 11 on Ubuntu 18.04, but succeeded on Travis CI at the time with the default
+                    openjdk11 image.
+                    -->
+                    <noPackageLevelAnnotations>true</noPackageLevelAnnotations>
                 </configuration>
             </plugin>
         </plugins>
