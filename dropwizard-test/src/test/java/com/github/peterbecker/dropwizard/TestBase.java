@@ -9,7 +9,9 @@ public abstract class TestBase {
     public static final DropwizardAppRule<TestConfiguration> RULE =
             new DropwizardAppRule<>(TestApplication.class, ResourceHelpers.resourceFilePath("testConfig.yaml"));
 
+    protected TestClient client = createClient();
+
     protected TestClient createClient() {
-        return new TestClient(RULE.getEnvironment(), RULE.getLocalPort());
+        return new TestClient(RULE.client(), RULE.getLocalPort());
     }
 }

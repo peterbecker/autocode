@@ -26,7 +26,7 @@ public class ${entity.name}Resource {
     @UnitOfWork
     public Response create(${entity.name} entity) throws URISyntaxException  {
         long id = dao.save(entity);
-        return Response.created(new URI("/${entity.name}/" + id)).build();
+        return Response.created(new URI("/${entity.name?lower_case}/" + id)).build();
     }
 
     @GET
@@ -34,7 +34,9 @@ public class ${entity.name}Resource {
     @Timed
     @UnitOfWork
     public ${entity.name} get(@PathParam("id") LongParam id) {
-        return dao.findById(id.get());
+        return verifyNotNull(
+                dao.findById(id.get())
+        );
     }
 
     @PUT
@@ -46,6 +48,26 @@ public class ${entity.name}Resource {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         dao.save(entity);
-        return Response.ok().build();
+        return Response.accepted().build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Timed
+    @UnitOfWork
+    public Response delete(@PathParam("id") LongParam id) {
+        dao.delete(
+                verifyNotNull(
+                        dao.findById(id.get())
+                )
+        );
+        return Response.accepted().build();
+    }
+
+    private ${entity.name} verifyNotNull(${entity.name} entity) {
+        if(entity == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return entity;
     }
 }

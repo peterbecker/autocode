@@ -15,4 +15,8 @@ public class ${entity.name}AppDao extends AbstractDAO<${entity.name}> {
     public long save(${entity.name} entity) {
         return persist(entity).getId();
     }
+
+    public void delete(${entity.name} entity) {
+        currentSession().delete(entity);
+    }
 }
