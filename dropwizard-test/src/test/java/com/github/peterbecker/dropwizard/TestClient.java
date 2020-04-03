@@ -1,15 +1,14 @@
 package com.github.peterbecker.dropwizard;
 
 import com.github.peterbecker.autocode.Person;
-import io.dropwizard.client.JerseyClientBuilder;
-import io.dropwizard.setup.Environment;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 @SuppressWarnings("WeakerAccess")
 public class TestClient {
