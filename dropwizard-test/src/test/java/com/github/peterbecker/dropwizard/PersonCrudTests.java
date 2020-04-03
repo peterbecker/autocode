@@ -1,9 +1,6 @@
 package com.github.peterbecker.dropwizard;
 
-import com.github.peterbecker.autocode.Person;
-import org.assertj.core.api.AssertionsForClassTypes;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
