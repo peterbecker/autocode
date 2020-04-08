@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<entities package="com.github.peterbecker.autocode" xmlns="http://github.com/peterbecker/autocode/entities">
+    <entity name="Person">
+        <property name="name" type="String"/>
+        <property name="birthDate" type="java.time.LocalDate"/>
+    </entity>
+    <entity name="Role">
+        <property name="name" type="String"/>
+        <property name="description" type="String"/>
+    </entity>
+</entities>

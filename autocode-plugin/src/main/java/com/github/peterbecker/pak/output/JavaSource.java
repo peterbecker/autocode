@@ -13,20 +13,9 @@ import java.nio.file.Paths;
 /**
  * Represents Java source code, to be compiled as part of the build.
  */
-public class JavaSource implements OutputTarget {
-    private final Path targetFolder;
-
+public class JavaSource extends PackageStructureTarget {
     public JavaSource(MavenProject project) throws IOException {
-        this.targetFolder = Paths.get(project.getBuild().getDirectory(), "generated-sources", "autocode");
-        Files.createDirectories(targetFolder);
-        project.addCompileSourceRoot(targetFolder.toString());
-    }
-
-    @Override
-    public Writer getWriter(String packageName, String fileName) throws IOException {
-        Path packageDir = targetFolder.resolve(packageName);
-        Files.createDirectories(packageDir);
-        Path entityFile = packageDir.resolve(fileName);
-        return Files.newBufferedWriter(entityFile);
+        super(Paths.get(project.getBuild().getDirectory(), "generated-sources", "autocode"));
+        project.addCompileSourceRoot(getRootFolder().toString());
     }
 }

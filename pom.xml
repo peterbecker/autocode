@@ -18,13 +18,14 @@
 
     <modules>
         <module>autocode-plugin</module>
+        <module>angular-pak</module>
+        <module>angular-test</module>
         <module>dropwizard-lib</module>
         <module>dropwizard-pak</module>
         <module>dropwizard-test</module>
         <module>java-jpa-lib</module>
         <module>java-jpa-pak</module>
         <module>java-jpa-test</module>
-        <module>angular-test</module>
     </modules>
 
     <properties>
