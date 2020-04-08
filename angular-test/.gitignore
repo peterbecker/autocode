@@ -6,6 +6,8 @@
 /out-tsc
 # Only exists if Bazel was run
 /bazel-out
+# Node installation created by Maven Frontend Plugin
+/node
 
 # dependencies
 /node_modules
