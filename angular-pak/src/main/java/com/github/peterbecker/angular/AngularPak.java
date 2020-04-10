@@ -36,10 +36,11 @@ public class AngularPak implements AutoCodePak {
     @Override
     public List<GlobalTemplate> getGlobalTemplates() {
         return Stream.of(
+                "autocode.module.ts",
+                "autocode-routing.module.ts",
                 "navigation.component.ts",
                 "navigation.component.html",
-                "navigation.component.css",
-                "autocode.module.ts"
+                "navigation.component.css"
         ).map(this::createGlobalTemplate).collect(Collectors.toList());
     }
 
