@@ -1,4 +1,4 @@
-interface ${entity.name}Model {
+interface ${entity.name} {
 <#list entity.property as property>
     ${property.name}:${property.type};
 </#list>

@@ -2,6 +2,12 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+      "paths": {
+        "*": [
+          "*",
+          "target/generated-sources/autocode/*"
+        ]
+      },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
