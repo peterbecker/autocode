@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
 <#list entities as entity>
 import {${entity.name}Module} from "./${entity.name?lower_case}/${entity.name?lower_case}.module";
 </#list>

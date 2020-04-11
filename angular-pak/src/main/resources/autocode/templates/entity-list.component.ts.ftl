@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 @Component({
-    selector: 'app-${entity.name?lower_case}-list',
+    selector: 'autocode-${entity.name?lower_case}-list',
     templateUrl: './${entity.name?lower_case}-list.component.html',
     styleUrls: ['./${entity.name?lower_case}-list.component.css']
 })
