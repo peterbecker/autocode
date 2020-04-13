@@ -11,7 +11,6 @@ import org.apache.maven.project.MavenProject;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -55,7 +54,8 @@ public class AngularPak implements AutoCodePak {
                 ".component.css",
                 "-list.component.ts",
                 "-list.component.html",
-                "-list.component.css"
+                "-list.component.css",
+                "-list.resolver.ts"
         ).map(this::createEntityTemplate).collect(Collectors.toList());
     }
 

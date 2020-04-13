@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 <#list entities as entity>
 import {${entity.name}Component} from "./${entity.name?lower_case}/${entity.name?lower_case}.component";
 import {${entity.name}ListComponent} from "./${entity.name?lower_case}/${entity.name?lower_case}-list.component";
+import {${entity.name}ListResolver} from "./${entity.name?lower_case}/${entity.name?lower_case}-list.resolver";
 </#list>
 import {CommonModule} from '@angular/common';
 import {AutocodeNavigationComponent} from "./navigation.component";
@@ -18,7 +19,10 @@ const routes: Routes = [
 <#list entities as entity>
     {
         path: '${entity.name?lower_case}',
-        component: ${entity.name}ListComponent
+        component: ${entity.name}ListComponent,
+        resolve: {
+            data:  ${entity.name}ListResolver
+        }
     },
     {
         path: '${entity.name?lower_case}/:id',
