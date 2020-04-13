@@ -1,16 +1,20 @@
 package com.github.peterbecker.dropwizard;
 
 import com.github.peterbecker.autocode.Person;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
 @SuppressWarnings("WeakerAccess")
+@Slf4j
 public class TestClient {
     private final Client httpClient;
     private final String baseUrl;
@@ -36,6 +40,12 @@ public class TestClient {
         return httpClient.target(baseUrl + path).request().delete();
     }
 
+    public List<Person> getAllPersons() {
+        Response response = get("person");
+        assertThat(response.getStatus()).isEqualTo(200);
+        return response.readEntity(new GenericType<>(){});
+    }
+
     public Person getPerson(long id) {
         Response response = get("person/" + id);
         assertThat(response.getStatus()).isEqualTo(200);
@@ -47,13 +57,16 @@ public class TestClient {
         Response response = post("person", person);
         assertThat(response.getStatus()).isEqualTo(201);
         String prefix = baseUrl + "person/";
-        assertThat(response.getHeaderString("location")).startsWith(prefix);
-        String idAsString = response.getHeaderString("location").substring(prefix.length());
+        String location = response.getHeaderString("location");
+        assertThat(location).startsWith(prefix);
+        String idAsString = location.substring(prefix.length());
+        log.info("Created new person with id " + idAsString);
         return Long.parseLong(idAsString);
     }
 
     public void updatePerson(long id, String name, LocalDate birthday) {
         Person person = new Person(name, birthday);
+        person.setId(id);
         Response response = put("person/" + id, person);
         assertThat(response.getStatus()).isEqualTo(202);
     }

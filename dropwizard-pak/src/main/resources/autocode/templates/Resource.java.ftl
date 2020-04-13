@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.List;
 import java.util.Optional;
 
 @Path("/${entity.name?lower_case}")
@@ -27,6 +28,13 @@ public class ${entity.name}Resource {
     public Response create(${entity.name} entity) throws URISyntaxException  {
         long id = dao.save(entity);
         return Response.created(new URI("/${entity.name?lower_case}/" + id)).build();
+    }
+
+    @GET
+    @Timed
+    @UnitOfWork
+    public List<${entity.name}> getAll() {
+        return dao.getAll();
     }
 
     @GET
