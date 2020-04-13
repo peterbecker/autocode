@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - oraclejdk11 # at the time of change openjdk11 on Travis still has a version with https://bugs.openjdk.java.net/browse/JDK-8222754
+  - openjdk11
 cache:
   directories:
     - $HOME/.m2
