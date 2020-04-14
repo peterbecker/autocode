@@ -1,6 +1,8 @@
 language: java
 jdk:
-  - openjdk11
+  # We use JDK 12 as workaround for https://bugs.openjdk.java.net/browse/JDK-8222754 being present in Travis' JDK 11
+  # images (both Open and Oracle JDK). Should be 'openjdk11'.
+  - openjdk12
 cache:
   directories:
     - $HOME/.m2
