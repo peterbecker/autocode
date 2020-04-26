@@ -21,7 +21,7 @@ const routes: Routes = [
         path: '${entity.name?lower_case}',
         component: ${entity.name}ListComponent,
         resolve: {
-            data:  ${entity.name}ListResolver
+            items:  ${entity.name}ListResolver
         }
     },
     {
