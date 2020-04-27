@@ -49,6 +49,7 @@ public class AngularPak implements AutoCodePak {
                 ".module.ts",
                 ".model.ts",
                 ".service.ts",
+                ".resolver.ts",
                 ".component.ts",
                 ".component.html",
                 ".component.css",

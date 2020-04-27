@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 <#list entities as entity>
 import {${entity.name}Component} from "./${entity.name?lower_case}/${entity.name?lower_case}.component";
+import {${entity.name}Resolver} from "./${entity.name?lower_case}/${entity.name?lower_case}.resolver";
 import {${entity.name}ListComponent} from "./${entity.name?lower_case}/${entity.name?lower_case}-list.component";
 import {${entity.name}ListResolver} from "./${entity.name?lower_case}/${entity.name?lower_case}-list.resolver";
 </#list>
@@ -22,11 +23,16 @@ const routes: Routes = [
         component: ${entity.name}ListComponent,
         resolve: {
             items:  ${entity.name}ListResolver
-        }
-    },
-    {
-        path: '${entity.name?lower_case}/:id',
-        component: ${entity.name}Component
+        },
+        children: [
+            {
+                path: ':id',
+                component: ${entity.name}Component,
+                resolve: {
+                    item: ${entity.name}Resolver
+                },
+            },
+        ]
     },
 </#list>
 ];

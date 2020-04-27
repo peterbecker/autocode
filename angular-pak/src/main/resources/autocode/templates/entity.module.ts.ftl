@@ -1,12 +1,14 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
+import {RouterModule} from '@angular/router';
 import {${entity.name}Component} from "./${entity.name?lower_case}.component";
 import {${entity.name}ListComponent} from "./${entity.name?lower_case}-list.component";
 import {${entity.name}Service} from "./${entity.name?lower_case}.service";
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        RouterModule
     ],
     declarations: [
         ${entity.name}Component,

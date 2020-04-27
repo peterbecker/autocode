@@ -15,4 +15,8 @@ export class ${entity.name}Service {
     getAll(): Observable<any> {
         return this.http.get(this.endpoint);
     }
+
+    getById(id: string): Observable<any> {
+        return this.http.get(this.endpoint + "/" + id);
+    }
 }
