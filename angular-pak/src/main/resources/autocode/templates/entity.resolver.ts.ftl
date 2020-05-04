@@ -9,11 +9,11 @@ import {${entity.name}Service} from "./${entity.name?lower_case}.service";
     providedIn: 'root',
 })
 export class ${entity.name}Resolver implements Resolve<${entity.name}> {
-    constructor(private api: ${entity.name}Service) {
+    constructor(private service: ${entity.name}Service) {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        return this.api.getById(route.paramMap.get('id')).pipe(
+        return this.service.getById(route.paramMap.get('id')).pipe(
             catchError((error) => {
                 return empty();
             })

@@ -12,11 +12,19 @@ export class ${entity.name}Service {
 
     private endpoint = "/api/${entity.name?lower_case}";
 
-    getAll(): Observable<any> {
-        return this.http.get(this.endpoint);
+    getAll(): Observable<${entity.name}> {
+        return this.http.get<${entity.name}>(this.endpoint);
     }
 
     getById(id: string): Observable<any> {
         return this.http.get(this.endpoint + "/" + id);
+    }
+
+    save(entity: ${entity.name}): Observable<${entity.name}> {
+        return this.http.put<${entity.name}>(this.endpoint + "/" + entity.id, entity);
+    }
+
+    delete(entity: ${entity.name}): Observable<any> {
+        return this.http.delete(this.endpoint + "/" + entity.id);
     }
 }
