@@ -55,8 +55,7 @@ public class AngularPak implements AutoCodePak {
                 ".component.css",
                 "-list.component.ts",
                 "-list.component.html",
-                "-list.component.css",
-                "-list.resolver.ts"
+                "-list.component.css"
         ).map(this::createEntityTemplate).collect(Collectors.toList());
     }
 

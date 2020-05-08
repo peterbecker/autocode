@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {${entity.name}} from "./${entity.name?lower_case}.model";
+import {${entity.name}Service} from "./${entity.name?lower_case}.service";
 
 @Component({
     selector: 'autocode-${entity.name?lower_case}-list',
@@ -10,11 +10,11 @@ import {${entity.name}} from "./${entity.name?lower_case}.model";
 export class ${entity.name}ListComponent {
     items: ${entity.name}[];
 
-    constructor(private activatedRoute: ActivatedRoute) { }
-
-    ngOnInit() {
-        this.activatedRoute.data.subscribe((data: { items: ${entity.name}[] }) => {
-            this.items = data.items;
-        });
+    constructor(service: ${entity.name}Service) {
+        <#--
+        We don't use a route resolver here, since it can't refresh the data in a controlled way -- onSameUrlNavigation
+        can't be attached to a child module.
+        -->
+        service.getAll().subscribe( data => { this.items = data; } );
     }
 }
