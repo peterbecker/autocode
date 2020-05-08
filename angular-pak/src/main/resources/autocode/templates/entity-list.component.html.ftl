@@ -2,6 +2,7 @@
 <div class="autocode-layout">
     <mat-nav-list>
         <a mat-list-item *ngFor="let item of items" [routerLink]="[item.id]" routerLinkActive="active-link">{{item.${entity.property[0].name}}}</a>
+        <button mat-flat-button color="primary" [routerLink]="'!new'">Create</button>
     </mat-nav-list>
     <mat-card class="autocode-right">
         <router-outlet></router-outlet>

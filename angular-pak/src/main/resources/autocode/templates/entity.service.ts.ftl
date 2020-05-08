@@ -29,7 +29,13 @@ export class ${entity.name}Service {
     }
 
     save(entity: ${entity.name}): Observable<${entity.name}> {
-        return this.http.put<${entity.name}>(this.endpoint + "/" + entity.id, entity).pipe(
+        let call;
+        if(entity.id!!) {
+            call = this.http.put<${entity.name}>(this.endpoint + "/" + entity.id, entity);
+        } else {
+            call = this.http.post<${entity.name}>(this.endpoint, entity);
+        }
+        return call.pipe(
             tap(() => { this.loadData(); })
         );
     }

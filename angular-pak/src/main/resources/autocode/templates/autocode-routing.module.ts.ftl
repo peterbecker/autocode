@@ -22,6 +22,13 @@ const routes: Routes = [
         component: ${entity.name}ListComponent,
         children: [
             {
+                path: '!new',
+                component: ${entity.name}Component,
+                resolve: {
+                    item: ${entity.name}Resolver
+                },
+            },
+            {
                 path: ':id',
                 component: ${entity.name}Component,
                 resolve: {

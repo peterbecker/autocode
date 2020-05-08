@@ -13,7 +13,11 @@ export class ${entity.name}Resolver implements Resolve<${entity.name}> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        return this.service.getById(route.paramMap.get('id')).pipe(
+        let id = route.paramMap.get('id');
+        if(!id) { // new object
+            return {} as ${entity.name};
+        }
+        return this.service.getById(id).pipe(
             catchError((error) => {
                 return empty();
             })
