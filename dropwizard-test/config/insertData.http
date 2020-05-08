@@ -1,0 +1,54 @@
+POST http://localhost:8080/person
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "birthDate": "1990-01-01"
+}
+
+###
+POST http://localhost:8080/person
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "birthDate": "1992-02-02"
+}
+
+###
+POST http://localhost:8080/person
+Content-Type: application/json
+
+{
+  "name": "Jack Doe",
+  "birthDate": "2005-10-11"
+}
+
+###
+POST http://localhost:8080/person
+Content-Type: application/json
+
+{
+  "name": "Ron Roe",
+  "birthDate": "1983-03-01"
+}
+
+###
+POST http://localhost:8080/role
+Content-Type: application/json
+
+{
+  "name": "User",
+  "description": "Just a user"
+}
+
+###
+POST http://localhost:8080/role
+Content-Type: application/json
+
+{
+  "name": "Admin",
+  "description": "An administrator"
+}
+
+###

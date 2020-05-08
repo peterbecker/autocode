@@ -120,7 +120,7 @@ public class AutoCodePlugin extends AbstractMojo {
                 getLog().debug("Processing entity " + entity.getName());
                 data.put("entity", entity);
                 String fileName = definition.getOutputFileNameGenerator().apply(entity);
-                renderTemplate(packageName, data, template, definition, fileName);
+                renderTemplate(packageName, data, template, definition, fileName, Optional.of(entity.getName()));
             }
         }
     }
@@ -152,7 +152,7 @@ public class AutoCodePlugin extends AbstractMojo {
             getLog().debug("Processing definition for template " + definition.getTemplateFileName());
             Template template = templates.get(definition);
             String fileName = definition.getOutputFileName();
-            renderTemplate(packageName, data, template, definition, fileName);
+            renderTemplate(packageName, data, template, definition, fileName, Optional.empty());
         }
     }
 
@@ -161,10 +161,11 @@ public class AutoCodePlugin extends AbstractMojo {
             Map<String, Object> data,
             Template template,
             AutoCodeTemplate definition,
-            String fileName
+            String fileName,
+            Optional<String> entityName
     ) throws MojoExecutionException {
         getLog().debug("Output file is " + fileName);
-        try (Writer out = definition.getOutputTarget().getWriter(packageName, fileName)) {
+        try (Writer out = definition.getOutputTarget().getWriter(packageName, fileName, entityName)) {
             template.process(data, out);
         } catch (TemplateException e) {
             throw new MojoExecutionException("Can not process template", e);

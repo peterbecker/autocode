@@ -18,6 +18,8 @@
 
     <modules>
         <module>autocode-plugin</module>
+        <module>angular-pak</module>
+        <module>angular-test</module>
         <module>dropwizard-lib</module>
         <module>dropwizard-pak</module>
         <module>dropwizard-test</module>

@@ -9,3 +9,11 @@ database:
         hibernate.hbm2ddl.auto: create
 
 message: Hello World!
+
+server: # use ports that are unlikely to clash
+    applicationConnectors:
+        - type: http
+          port: 9691
+    adminConnectors:
+        - type: http
+          port: 9692

@@ -29,6 +29,7 @@ public abstract class AutocodeApplication<C extends AutocodeConfiguration> exten
     @Override
     @OverridingMethodsMustInvokeSuper
     public void run(C c, Environment environment) throws Exception {
+        super.run(c, environment);
 <#list entities as entity>
         environment.jersey().register(new ${entity.name}Resource(new ${entity.name}AppDao(hibernate.getSessionFactory())));
 </#list>

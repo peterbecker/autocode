@@ -1,11 +1,13 @@
 package com.github.peterbecker.dropwizard;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.collect.ImmutableList;
 import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.hibernate.SessionFactoryFactory;
 import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
@@ -22,6 +24,12 @@ public abstract class AutocodeApplicationBase<C extends AutocodeConfiguration> e
     };
 
     protected abstract ImmutableList<Class<?>> getEntities();
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void run(C config, Environment environment) throws Exception {
+        environment.getObjectMapper().configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+    }
 
     @Override
     @OverridingMethodsMustInvokeSuper
