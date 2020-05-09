@@ -2,6 +2,7 @@ package com.github.peterbecker;
 
 import com.github.peterbecker.autocode.entities.Entities;
 import com.github.peterbecker.autocode.entities.EntityType;
+import com.github.peterbecker.autocode.entities.PropertyType;
 import com.github.peterbecker.pak.AutoCodePak;
 import com.github.peterbecker.pak.templates.AutoCodeTemplate;
 import com.github.peterbecker.pak.templates.EntityTemplate;
@@ -47,9 +48,23 @@ public class AutoCodePlugin extends AbstractMojo {
         validateParametersAndInitialize();
         List<AutoCodePak> paks = loadPaks();
         Entities entities = readEntities();
+        validateEntities(entities);
 
         createGlobalSourceFiles(entities, setUpGlobalTemplates(paks));
         createEntitySourceFiles(entities, setUpEntityTemplates(paks));
+    }
+
+    private void validateEntities(Entities entities) throws MojoExecutionException {
+        for (EntityType entity : entities.getEntity()) {
+            for (PropertyType property : entity.getProperty()) {
+                try {
+                    Type.valueOf(property.getType().toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    throw new MojoExecutionException("Entity '" + entity.getName() + "' has unknown type '" +
+                            property.getType() + "' on property '" + property.getName() + "'");
+                }
+            }
+        }
     }
 
     private List<AutoCodePak> loadPaks() throws MojoExecutionException {
@@ -98,6 +113,7 @@ public class AutoCodePlugin extends AbstractMojo {
         Map<EntityTemplate, Template> result = new HashMap<>();
         try {
             for (AutoCodePak pak : paks) {
+                fmConfig.setSharedVariable("map", new FreemarkerMapper(pak));
                 for (EntityTemplate def : pak.getEntityTemplates()) {
                     result.put(def, fmConfig.getTemplate(def.getTemplateFileName()));
                 }
@@ -132,6 +148,7 @@ public class AutoCodePlugin extends AbstractMojo {
         Map<GlobalTemplate, Template> result = new HashMap<>();
         try {
             for (AutoCodePak pak : paks) {
+                fmConfig.setSharedVariable("map", new FreemarkerMapper(pak));
                 for (GlobalTemplate def : pak.getGlobalTemplates()) {
                     result.put(def, fmConfig.getTemplate(def.getTemplateFileName()));
                 }

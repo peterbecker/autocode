@@ -2,7 +2,7 @@
 <entities package="com.github.peterbecker.autocode" xmlns="http://github.com/peterbecker/autocode/entities">
     <entity name="Person">
         <property name="name" type="string"/>
-        <property name="birthDate" type="Date"/>
+        <property name="birthDate" type="date"/>
     </entity>
     <entity name="Role">
         <property name="name" type="string"/>

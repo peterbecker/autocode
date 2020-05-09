@@ -23,6 +23,7 @@
 
     <xs:complexType name="propertyType">
         <xs:attribute name="name" use="required"/>
+        <!-- see com.github.peterbecker.Type for supported types -->
         <xs:attribute name="type" use="required"/>
     </xs:complexType>
 </xs:schema>

@@ -1,5 +1,7 @@
 package com.github.peterbecker.jpa;
 
+import com.github.peterbecker.Type;
+import com.github.peterbecker.Types;
 import com.github.peterbecker.pak.AutoCodePak;
 import com.github.peterbecker.pak.output.JavaSource;
 import com.github.peterbecker.pak.output.OutputTarget;
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class JpaPak implements AutoCodePak {
     private OutputTarget javaSources;
@@ -31,5 +34,10 @@ public class JpaPak implements AutoCodePak {
                 new EntityTemplate("Dao.java.ftl", javaSources, e -> e.getName() + "Dao.java"),
                 new EntityTemplate("Entity.java.ftl", javaSources, e -> e.getName() + ".java")
         );
+    }
+
+    @Override
+    public Map<Type, String> getTypeMap() {
+        return Types.JAVA;
     }
 }

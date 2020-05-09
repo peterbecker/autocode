@@ -1,5 +1,7 @@
 package com.github.peterbecker.angular;
 
+import com.github.peterbecker.Type;
+import com.github.peterbecker.Types;
 import com.github.peterbecker.autocode.entities.EntityType;
 import com.github.peterbecker.pak.AutoCodePak;
 import com.github.peterbecker.pak.output.FlatFolderTarget;
@@ -12,6 +14,7 @@ import org.apache.maven.project.MavenProject;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -69,5 +72,10 @@ public class AngularPak implements AutoCodePak {
 
     private String mapEntityName(EntityType e) {
         return e.getName().toLowerCase();
+    }
+
+    @Override
+    public Map<Type, String> getTypeMap() {
+        return Types.TYPE_SCRIPT;
     }
 }
