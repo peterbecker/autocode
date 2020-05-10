@@ -23,6 +23,11 @@ public class AngularPak implements AutoCodePak {
     private OutputTarget entityFiles;
 
     @Override
+    public String getName() {
+        return "Angular";
+    }
+
+    @Override
     public void init(MavenProject project) throws IOException {
         this.globalFiles =
                 new FlatFolderTarget(

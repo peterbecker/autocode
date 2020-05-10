@@ -10,12 +10,17 @@ import java.util.List;
 import java.util.Map;
 
 public interface AutoCodePak {
+    /**
+     * A name used for log output.
+     */
+    String getName();
+
     void init(MavenProject project) throws IOException;
     List<GlobalTemplate> getGlobalTemplates();
     List<EntityTemplate> getEntityTemplates();
 
     /**
-     * Maps the Autocode types to the strings representing the platform specific types.
+     * Maps the AutoCode types to the strings representing the platform specific types.
      */
     Map<Type, String> getTypeMap();
 }

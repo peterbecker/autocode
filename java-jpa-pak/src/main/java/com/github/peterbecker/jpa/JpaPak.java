@@ -19,6 +19,11 @@ public class JpaPak implements AutoCodePak {
     private OutputTarget javaSources;
 
     @Override
+    public String getName() {
+        return "Java Persistence API";
+    }
+
+    @Override
     public void init(MavenProject project) throws IOException {
         this.javaSources = new JavaSource(project);
     }

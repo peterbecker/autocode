@@ -26,6 +26,7 @@
         <module>java-jpa-lib</module>
         <module>java-jpa-pak</module>
         <module>java-jpa-test</module>
+        <module>autocode-test-app</module>
     </modules>
 
     <properties>

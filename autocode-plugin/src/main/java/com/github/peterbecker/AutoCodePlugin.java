@@ -107,13 +107,11 @@ public class AutoCodePlugin extends AbstractMojo {
     }
 
     private Map<EntityTemplate, Template> setUpEntityTemplates(List<AutoCodePak> paks) throws MojoExecutionException {
-        Configuration fmConfig = new Configuration(Configuration.VERSION_2_3_28);
-        fmConfig.setClassForTemplateLoading(AutoCodePlugin.class, "/autocode/templates");
-
         Map<EntityTemplate, Template> result = new HashMap<>();
         try {
             for (AutoCodePak pak : paks) {
-                fmConfig.setSharedVariable("map", new FreemarkerMapper(pak));
+                getLog().info("Processing entities for Pak: " + pak.getName());
+                Configuration fmConfig = createFreemarkerConfig(pak);
                 for (EntityTemplate def : pak.getEntityTemplates()) {
                     result.put(def, fmConfig.getTemplate(def.getTemplateFileName()));
                 }
@@ -122,6 +120,13 @@ public class AutoCodePlugin extends AbstractMojo {
             throw new MojoExecutionException("Cannot read template", e);
         }
         return result;
+    }
+
+    private Configuration createFreemarkerConfig(AutoCodePak pak) {
+        Configuration fmConfig = new Configuration(Configuration.VERSION_2_3_28);
+        fmConfig.setClassForTemplateLoading(AutoCodePlugin.class, "/autocode/templates");
+        fmConfig.setSharedVariable("map", new FreemarkerMapper(pak));
+        return fmConfig;
     }
 
     private void createEntitySourceFiles(Entities entities, Map<EntityTemplate, Template> templates) throws MojoExecutionException {
@@ -142,13 +147,11 @@ public class AutoCodePlugin extends AbstractMojo {
     }
 
     private Map<GlobalTemplate, Template> setUpGlobalTemplates(List<AutoCodePak> paks) throws MojoExecutionException {
-        Configuration fmConfig = new Configuration(Configuration.VERSION_2_3_28);
-        fmConfig.setClassForTemplateLoading(AutoCodePlugin.class, "/autocode/templates");
-
         Map<GlobalTemplate, Template> result = new HashMap<>();
         try {
             for (AutoCodePak pak : paks) {
-                fmConfig.setSharedVariable("map", new FreemarkerMapper(pak));
+                getLog().info("Processing global templates for Pak: " + pak.getName());
+                Configuration fmConfig = createFreemarkerConfig(pak);
                 for (GlobalTemplate def : pak.getGlobalTemplates()) {
                     result.put(def, fmConfig.getTemplate(def.getTemplateFileName()));
                 }

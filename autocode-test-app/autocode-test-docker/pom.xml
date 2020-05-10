@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.github.peterbecker</groupId>
+        <artifactId>autocode-test-app</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>autocode-test-docker</artifactId>
+
+    <dependencies>
+        <!-- dependencies are used to enforce build order -->
+        <dependency>
+            <groupId>com.github.peterbecker</groupId>
+            <artifactId>autocode-test-back</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.github.peterbecker</groupId>
+            <artifactId>autocode-test-front</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>pom</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- TODO: this is not triggering on 'install', we may need configuration. See https://dmp.fabric8.io/#simple-dockerfile-build -->
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.33.0</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>
