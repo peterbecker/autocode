@@ -5,10 +5,9 @@ RUN apt-get update && \
     mkdir -p /app/back && \
     mkdir /data
 
-# TODO: the files in 'target' currently still need to be manually copied there, the build should do that
 COPY target/autocode-test-back-*.jar /app/back/app.jar
 COPY config/app.yaml /app/back/app.yaml
-COPY target/dist/test-app /app/front
+COPY target/test-app /app/front
 COPY config/nginx.conf /etc/nginx/sites-available/default
 
 EXPOSE 80
