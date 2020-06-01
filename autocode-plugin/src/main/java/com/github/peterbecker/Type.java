@@ -5,6 +5,10 @@ package com.github.peterbecker;
  */
 public enum Type {
     /**
+     * A reference to another entity.
+     */
+    REFERENCE,
+    /**
      * A 32 bit signed integer.
      */
     INT32,

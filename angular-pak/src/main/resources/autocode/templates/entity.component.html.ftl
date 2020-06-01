@@ -8,6 +8,7 @@
             <mat-datepicker-toggle [for]="${property.name}Datepicker"></mat-datepicker-toggle>
             <mat-datepicker #${property.name}Datepicker></mat-datepicker>
     <#else>
+        <!-- TODO: handle references -->
             <input matInput name="${property.name}" [(ngModel)]="item.${property.name}">
     </#if>
         </mat-form-field>

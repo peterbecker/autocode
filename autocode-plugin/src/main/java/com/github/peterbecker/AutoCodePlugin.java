@@ -54,17 +54,50 @@ public class AutoCodePlugin extends AbstractMojo {
         createEntitySourceFiles(entities, setUpEntityTemplates(paks));
     }
 
+    // TODO test cases: cycle detection, invalid type
     private void validateEntities(Entities entities) throws MojoExecutionException {
         for (EntityType entity : entities.getEntity()) {
             for (PropertyType property : entity.getProperty()) {
-                try {
-                    Type.valueOf(property.getType().toUpperCase());
-                } catch (IllegalArgumentException e) {
+                if (isBasicType(property.getType())) {
+                    continue;
+                }
+                Optional<EntityType> reference = findEntity(property.getType(), entities);
+                if (reference.isEmpty()) {
                     throw new MojoExecutionException("Entity '" + entity.getName() + "' has unknown type '" +
                             property.getType() + "' on property '" + property.getName() + "'");
                 }
+                if (isCycle(reference.get(), entity, entities)) {
+                    throw new MojoExecutionException("Entity '" + entity.getName() +
+                            "' has reference cycle starting with property '" + property.getName() + "'");
+                }
             }
         }
+    }
+
+    private boolean isCycle(EntityType start, EntityType target, Entities entities) {
+        if (start.equals(target)) {
+            return true;
+        } else {
+            return start.getProperty().stream()
+                    .anyMatch(
+                            p -> findEntity(p.getType(), entities)
+                                    .map(e -> isCycle(e, target, entities))
+                                    .orElse(false)
+                    );
+        }
+    }
+
+    private boolean isBasicType(String type) {
+        try {
+            Type.valueOf(type.toUpperCase());
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    private Optional<EntityType> findEntity(String type, Entities entities) {
+        return entities.getEntity().stream().filter(it -> it.getName().equals(type)).findFirst();
     }
 
     private List<AutoCodePak> loadPaks() throws MojoExecutionException {
@@ -125,7 +158,8 @@ public class AutoCodePlugin extends AbstractMojo {
     private Configuration createFreemarkerConfig(AutoCodePak pak) {
         Configuration fmConfig = new Configuration(Configuration.VERSION_2_3_28);
         fmConfig.setClassForTemplateLoading(AutoCodePlugin.class, "/autocode/templates");
-        fmConfig.setSharedVariable("map", new FreemarkerMapper(pak));
+        fmConfig.setSharedVariable("map", new FreemarkerTypeMapper(pak));
+        fmConfig.setSharedVariable("imports", new FreemarkerImportsMapper(pak));
         return fmConfig;
     }
 
