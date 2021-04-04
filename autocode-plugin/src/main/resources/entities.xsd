@@ -25,5 +25,13 @@
         <xs:attribute name="name" use="required"/>
         <!-- see com.github.peterbecker.Type for supported types -->
         <xs:attribute name="type" use="required"/>
+        <xs:attribute name="linkType" default="single" type="linkType"/>
     </xs:complexType>
+
+    <xs:simpleType name="linkType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="single"/>
+            <xs:enumeration value="set"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

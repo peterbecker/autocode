@@ -32,4 +32,8 @@ public abstract class FreemarkerMapper implements TemplateDirectiveModel {
             throw new TemplateException("Directive must have a string passed to the 'type' parameter", environment);
         }
     }
+
+    protected String wrapIntoSet(String baseType) {
+        return String.format(pak.getSetFormat(), baseType);
+    }
 }

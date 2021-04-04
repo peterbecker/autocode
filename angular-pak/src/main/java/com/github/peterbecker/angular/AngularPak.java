@@ -83,4 +83,9 @@ public class AngularPak implements AutoCodePak {
     public Map<Type, String> getTypeMap() {
         return Types.TYPE_SCRIPT;
     }
+
+    @Override
+    public String getSetFormat() {
+        return Types.TYPE_SCRIPT_SET_FORMAT;
+    }
 }

@@ -47,4 +47,9 @@ public class DropwizardPak implements AutoCodePak {
     public Map<Type, String> getTypeMap() {
         return Types.JAVA;
     }
+
+    @Override
+    public String getSetFormat() {
+        return Types.JAVA_SET_FORMAT;
+    }
 }

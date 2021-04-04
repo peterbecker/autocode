@@ -10,10 +10,13 @@ public class Types {
             Type.DATE, "java.time.LocalDate"
     );
 
+    public static final String JAVA_SET_FORMAT = "Set<%s>";
+
     public static final Map<Type, String> TYPE_SCRIPT = Map.of(
             Type.INT32, "Number",
             Type.INT64, "Number",
             Type.STRING, "String",
             Type.DATE, "Date"
     );
+    public static final String TYPE_SCRIPT_SET_FORMAT = "TODO";
 }

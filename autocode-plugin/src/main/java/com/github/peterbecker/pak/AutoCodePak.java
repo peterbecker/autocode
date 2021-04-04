@@ -23,4 +23,9 @@ public interface AutoCodePak {
      * Maps the AutoCode types to the strings representing the platform specific types.
      */
     Map<Type, String> getTypeMap();
+
+    /**
+     * A format suitable to wrap a base type into a set, using a single %s to insert the base type.
+     */
+    String getSetFormat();
 }
