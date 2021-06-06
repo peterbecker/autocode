@@ -1,16 +1,16 @@
 Test App
 ========
 
-This modules combines a Dropwizard backend and an Angular frontend into a full app,
+This module combines a Dropwizard backend and an Angular frontend into a full app,
 running in a Docker container. The build requires Docker to be installed.
 
-On running 'install', this build will create a Docker image that can be run like this:
+On running `mvn install`, this build will create a Docker image that can be run like this:
 
-```shell script
-docker run -n autocode-test \\
-           -it \\
-           -p $LOCAL_PORT:80 \\
-           -v $LOCAL_DIR:/data \\
+```shell
+docker run --name autocode-test \
+           -it \
+           -p $LOCAL_PORT:8080 \
+           -v $LOCAL_DIR:/data \
            peterbecker/autocode-test-docker
 ```
 
@@ -24,6 +24,11 @@ and will be reset on restarts.
 
 The app can be stopped by sending SIGTERM (Ctrl+C) if `-it` was used, or always:
 
-```shell script
+```shell
 docker stop autocode-test
+```
+
+To clean up an old setup:
+```shell
+docker rm autocode-test
 ```
