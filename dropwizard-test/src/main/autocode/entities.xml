@@ -3,6 +3,7 @@
     <entity name="Person">
         <property name="name" type="string"/>
         <property name="birthDate" type="date"/>
+        <property name="roles" type="Role" linkType="set"/>
     </entity>
     <entity name="Role">
         <property name="name" type="string"/>

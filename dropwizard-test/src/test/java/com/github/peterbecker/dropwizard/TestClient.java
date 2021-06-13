@@ -1,6 +1,7 @@
 package com.github.peterbecker.dropwizard;
 
 import com.github.peterbecker.autocode.Person;
+import com.github.peterbecker.autocode.Role;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.ws.rs.client.Client;
@@ -9,6 +10,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,38 +43,57 @@ public class TestClient {
     }
 
     public List<Person> getAllPersons() {
-        Response response = get("person");
+        var response = get("person");
         assertThat(response.getStatus()).isEqualTo(200);
         return response.readEntity(new GenericType<>(){});
     }
 
     public Person getPerson(long id) {
-        Response response = get("person/" + id);
+        var response = get("person/" + id);
         assertThat(response.getStatus()).isEqualTo(200);
         return response.readEntity(Person.class);
     }
 
-    public long addPerson(String name, LocalDate birthday) {
-        Person person = new Person(name, birthday);
-        Response response = post("person", person);
+    public Person createPerson(String name, LocalDate birthday, Role... roles) {
+        var person = new Person(name, birthday, Set.of(roles));
+        var response = post("person", person);
         assertThat(response.getStatus()).isEqualTo(201);
-        String prefix = baseUrl + "person/";
-        String location = response.getHeaderString("location");
+        var prefix = baseUrl + "person/";
+        var location = response.getHeaderString("location");
         assertThat(location).startsWith(prefix);
-        String idAsString = location.substring(prefix.length());
+        var idAsString = location.substring(prefix.length());
         log.info("Created new person with id " + idAsString);
-        return Long.parseLong(idAsString);
+        person.setId(Long.parseLong(idAsString));
+        return person;
     }
 
-    public void updatePerson(long id, String name, LocalDate birthday) {
-        Person person = new Person(name, birthday);
+    public void updatePerson(long id, String name, LocalDate birthday, Role... roles) {
+        var person = new Person(name, birthday, Set.of(roles));
         person.setId(id);
-        Response response = put("person/" + id, person);
+        var response = put("person/" + id, person);
         assertThat(response.getStatus()).isEqualTo(202);
     }
 
     public void deletePerson(long id) {
-        Response response = delete("person/" + id);
+        var response = delete("person/" + id);
+        assertThat(response.getStatus()).isEqualTo(202);
+    }
+
+    public Role createRole(String name, String description) {
+        var role = new Role(name, description);
+        var response = post("role", role);
+        assertThat(response.getStatus()).isEqualTo(201);
+        var prefix = baseUrl + "role/";
+        var location = response.getHeaderString("location");
+        assertThat(location).startsWith(prefix);
+        var idAsString = location.substring(prefix.length());
+        log.info("Created new role with id " + idAsString);
+        role.setId(Long.parseLong(idAsString));
+        return role;
+    }
+
+    public void deleteRole(long id) {
+        var response = delete("role/" + id);
         assertThat(response.getStatus()).isEqualTo(202);
     }
 }

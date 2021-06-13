@@ -20,3 +20,6 @@ The test projects show usage of the plugin. Generally speaking it comes down to:
  
 The PAKs are described in the `README.md` files of their main module. It is recommended to check
 out the corresponding test module, including the generated code as that shows usage and scope.
+
+Note: when developing on this code base, a lot of inter-module dependencies can change. In particular if the XSD file
+gets updated, these may not update automatically. A `mvn clean install` tends to fix this kind of issue.
